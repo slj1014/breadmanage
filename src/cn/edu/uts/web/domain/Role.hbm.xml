@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.edu.uts.web.domain.Role">
+		<id length="10" name="id">
+			<generator class="increment"></generator>
+		</id>
+		<property name="name" length="45"></property>
+		<property name="descrpition" length="45"></property>
+		<set name="users" table="user_role">
+			<key>
+				<column name="roleid"></column>
+			</key>
+			<many-to-many class="cn.edu.uts.web.domain.User" column="userid"></many-to-many>
+		</set>
+		<set name="privileges" table="role_privilege" lazy="false">
+		   <key>
+		      <column name="roleid"></column>
+		   </key>
+		   <many-to-many class="cn.edu.uts.web.domain.Privilege" column="privilegeid"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>

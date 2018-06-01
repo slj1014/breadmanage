@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.uts.web.domain.Sell">
+     <id name="id">
+       <generator class="uuid"></generator>
+     </id>
+     <property name="selldate"></property>
+     <property name="sellnum"></property>
+     <property name="sellprice"></property>
+     <many-to-one name="bread" column="breadid" class="cn.edu.uts.web.domain.Bread"></many-to-one>
+  </class>
+</hibernate-mapping>

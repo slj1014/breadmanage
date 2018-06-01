@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="cn.edu.uts.web.domain.AddRecord">
+     <id name="id">
+       <generator class="uuid"></generator>
+     </id>
+     <property name="addtime"></property>
+     <property name="price"></property>
+     <property name="num"></property>
+     <property name="dieline"></property>
+     <property name="remain"></property>
+     <property name="editprice"></property>
+     <property name="total"></property>
+     <many-to-one name="bread" column="breadid" class="cn.edu.uts.web.domain.Bread"></many-to-one>
+ </class>
+</hibernate-mapping>

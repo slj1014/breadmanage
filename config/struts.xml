@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 配置为开发模式 -->
+	<constant name="struts.devMode" value="true" />
+	<!-- 配置扩展名为action -->
+	<constant name="struts.action.extension" value="action" />
+	<!-- 配置主题 ,防止struts2标签毁坏样式 -->
+	<constant name="struts.ui.theme" value="simple" />
+
+	<package name="default" namespace="/" extends="struts-default">
+		<!-- 配置过滤器 -->
+		<interceptors>
+			<interceptor name="checkPrivilege"
+				class="cn.edu.uts.web.interceptor.CheckPrivilegeInterceptor"></interceptor>
+			<interceptor-stack name="mystack">
+				<interceptor-ref name="checkPrivilege"></interceptor-ref>
+				<interceptor-ref name="token">
+					<!-- includeMethods纺织机指定的方法重复提交，如果有很多的方法，用逗号隔开 -->
+					<param name="includeMethods">add,edit</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="mystack"></default-interceptor-ref>
+		<!-- 配置全局的结果 -->
+		<global-results>
+			<result name="loginUI">/WEB-INF/jsp/userAction/loginUI.jsp</result>
+			<result name="noPrivilegeError">/noPrivilegeError.jsp</result>
+			<result name="invalid.token">/error.jsp</result>
+			<result name="invalid.token">/error.jsp</result>
+		</global-results>
+
+		<!-- homeAction -->
+		<action name="homeAction_*" method="{1}" class="homeAction">
+			<result name="{1}">/WEB-INF/jsp/homeAction/{1}.jsp</result>
+		</action>
+
+		<!-- 用户Action -->
+		<action name="userAction_*" method="{1}" class="userAction">
+			<result name="saveUI">/WEB-INF/jsp/userAction/saveUI.jsp</result>
+			<result name="list">/WEB-INF/jsp/userAction/list.jsp</result>
+			<result name="editUI">/WEB-INF/jsp/userAction/saveUI.jsp</result>
+			<result name="toList" type="redirectAction">userAction_list</result>
+			<result name="toIndex" type="redirect">/index.jsp</result>
+			<result name="success" type="redirectAction">homeAction_right</result>
+			<result name="setPasswordUI">/WEB-INF/jsp/userAction/setPasswordUI.jsp
+			</result>
+		</action>
+
+		<!-- 角色Action -->
+		<action name="roleAction_*" class="roleAction" method="{1}">
+			<result name="saveUI">/WEB-INF/jsp/roleAction/saveUI.jsp</result>
+			<result name="list">/WEB-INF/jsp/roleAction/list.jsp</result>
+			<result name="editUI">/WEB-INF/jsp/roleAction/saveUI.jsp</result>
+			<result name="toList" type="redirectAction">roleAction_list</result>
+			<result name="setPrivilegeUI">/WEB-INF/jsp/roleAction/setPrivilegeUI.jsp
+			</result>
+		</action>
+
+		<!-- 面包Action -->
+		<action name="breadAction_*" class="breadAction" method="{1}">
+			<result name="saveUI">/WEB-INF/jsp/breadAction/saveUI.jsp</result>
+			<result name="list">/WEB-INF/jsp/breadAction/list.jsp</result>
+			<result name="ownList">/WEB-INF/jsp/breadAction/ownlist.jsp</result>
+			<result name="editUI">/WEB-INF/jsp/breadAction/saveUI.jsp</result>
+			<result name="toList" type="redirectAction">breadAction_list</result>
+			<result name="toOwnList" type="redirectAction">breadAction_ownList</result>
+		</action>
+
+		<!-- 入库Action -->
+		<action name="addRecordAction_*" method="{1}" class="addRecordAction">
+			<result name="saveUI">/WEB-INF/jsp/addRecordAction/saveUI.jsp</result>
+			<result name="toSave" type="redirectAction">addRecordAction_addUI</result>
+			<result name="list">/WEB-INF/jsp/addRecordAction/list.jsp</result>
+			<result name="repertory">/WEB-INF/jsp/addRecordAction/repertory.jsp</result>
+			<result name="deadline">/WEB-INF/jsp/addRecordAction/deadline.jsp</result>
+			<result name="editprice">/WEB-INF/jsp/addRecordAction/editprice.jsp</result>
+		    <result name="todeadline" type="redirectAction">addRecordAction_deadlinelist</result>
+		</action>
+
+		<!-- 销售Action -->
+		<action name="sellAction_*" method="{1}" class="sellAction">
+			<result name="saveUI">/WEB-INF/jsp/sellAction/saveUI.jsp</result>
+			<result name="toSave" type="redirectAction">sellAction_addUI</result>
+			<result name="list">/WEB-INF/jsp/sellAction/list.jsp</result>
+		</action>
+	</package>
+</struts>
